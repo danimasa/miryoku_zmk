@@ -8,8 +8,13 @@ jobs:
     uses: ./.github/workflows/main.yml
     secrets: inherit
     with:
-      # ZMK main (Zephyr 4.1, HWMv2): nice_nano_v2 was consolidated into
-      # nice_nano with board revisions; v2 = revision 2.0.0 (the default).
-      # Short form: "nice_nano//zmk"
-      board: '["nice_nano@2.0.0//zmk"]'
-      shield: '["corne_left","corne_right"]'
+      # Corne with OLED display, matching danimasa/zmk-config:
+      # zmk-nice-oled module (mctechnology17) provides the nice_oled
+      # shield + custom status screen; module is tested on ZMK v0.3.0
+      # and not yet updated for Zephyr 4.1, so pin ZMK to v0.3.0.
+      # v0.3.0 predates HWMv2: old board name nice_nano_v2 (no @rev//zmk).
+      board: '["nice_nano_v2"]'
+      shield: '["corne_left nice_oled","corne_right nice_oled","settings_reset"]'
+      branches: '["zmkfirmware/zmk/v0.3.0"]'
+      modules: '["mctechnology17/zmk-nice-oled/main"]'
+      kconfig: '["CONFIG_ZMK_DISPLAY=y\nCONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM=y\nCONFIG_ZMK_BLE_EXPERIMENTAL_FEATURES=y"]'
