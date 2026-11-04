@@ -1,0 +1,15 @@
+# Copyright 2024 Manna Harbour
+# https://github.com/manna-harbour/miryoku
+
+name: 'Build corne'
+on: workflow_dispatch
+jobs:
+  build:
+    uses: ./.github/workflows/main.yml
+    secrets: inherit
+    with:
+      # ZMK main (Zephyr 4.1, HWMv2): nice_nano_v2 was consolidated into
+      # nice_nano with board revisions; v2 = revision 2.0.0 (the default).
+      # Short form: "nice_nano//zmk"
+      board: '["nice_nano@2.0.0//zmk"]'
+      shield: '["corne_left","corne_right"]'
